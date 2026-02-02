@@ -1,0 +1,4 @@
+Serial Training Time: 64.47 seconds | Accuracy: 98.04%
+Parallel Training Time: 72.51 seconds | Accuracy: 97.81%
+Serial Training Time: 211.99 seconds | Accuracy: 98.11%
+Parallel Training Time: 214.18 seconds | Accuracy: 97.20%
