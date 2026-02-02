@@ -1,17 +1,24 @@
 import matplotlib.pyplot as plt
 
 def compare_results():
-    # Load training times from file
+    # Load training times and accuracy from file
     with open("results/training_times.txt", "r") as f:
         lines = f.readlines()
 
     serial_time = None
     parallel_time = None
+    serial_acc = None
+    parallel_acc = None
+
     for line in lines:
         if "Serial" in line:
-            serial_time = float(line.split(":")[1].split()[0])
+            parts = line.strip().split("|")
+            serial_time = float(parts[0].split(":")[1].split()[0])
+            serial_acc = float(parts[1].split(":")[1].replace("%", "").strip())
         if "Parallel" in line:
-            parallel_time = float(line.split(":")[1].split()[0])
+            parts = line.strip().split("|")
+            parallel_time = float(parts[0].split(":")[1].split()[0])
+            parallel_acc = float(parts[1].split(":")[1].replace("%", "").strip())
 
     if serial_time and parallel_time:
         speedup = serial_time / parallel_time
@@ -33,6 +40,19 @@ def compare_results():
 
         plt.savefig("results/speedup_chart.png")
         plt.close()
+
+    if serial_acc and parallel_acc:
+        # Save accuracy comparison chart
+        labels = ["Serial", "Parallel"]
+        accuracies = [serial_acc, parallel_acc]
+
+        plt.bar(labels, accuracies, color=['blue','green'])
+        plt.title("Accuracy Comparison")
+        plt.ylabel("Accuracy (%)")
+        plt.savefig("results/accuracy_comparison.png")
+        plt.close()
+
+        print(f"Serial Accuracy: {serial_acc:.2f}% | Parallel Accuracy: {parallel_acc:.2f}%")
 
 if __name__ == "__main__":
     compare_results()
