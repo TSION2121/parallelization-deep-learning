@@ -12,6 +12,9 @@ def train_parallel():
     trainset = torchvision.datasets.MNIST(root='./data', train=True, download=True, transform=transform)
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
 
+    testset = torchvision.datasets.MNIST(root='./data', train=False, download=True, transform=transform)
+    testloader = torch.utils.data.DataLoader(testset, batch_size=1000, shuffle=False)
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = nn.DataParallel(SimpleCNN()).to(device)
     criterion = nn.CrossEntropyLoss()
@@ -32,6 +35,19 @@ def train_parallel():
     end_time = time.time()
     training_time = end_time - start_time
 
+    # Accuracy evaluation
+    correct = 0
+    total = 0
+    with torch.no_grad():
+        for images, labels in testloader:
+            images, labels = images.to(device), labels.to(device)
+            outputs = model(images)
+            _, predicted = torch.max(outputs, 1)
+            total += labels.size(0)
+            correct += (predicted == labels).sum().item()
+    accuracy = 100 * correct / total
+    print(f"[Parallel] Test Accuracy: {accuracy:.2f}%")
+
     # Save loss curve
     plt.plot(losses, label="Parallel Loss")
     plt.xlabel("Iterations")
@@ -41,9 +57,9 @@ def train_parallel():
     plt.savefig("results/loss_curves_parallel.png")
     plt.close()
 
-    # Save training time
+    # Save training time and accuracy
     with open("results/training_times.txt", "a") as f:
-        f.write(f"Parallel Training Time: {training_time:.2f} seconds\n")
+        f.write(f"Parallel Training Time: {training_time:.2f} seconds | Accuracy: {accuracy:.2f}%\n")
 
 if __name__ == "__main__":
     train_parallel()
