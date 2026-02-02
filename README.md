@@ -31,7 +31,7 @@ This repository contains the implementation, evaluation, and performance analysi
 Clone the repository and install the required dependencies:
 
 ```bash
-git clone [https://github.com/TSION2121/parallelization-deep-learning.git](https://github.com/TSION2121/parallelization-deep-learning.git)
+git clone https://github.com/TSION2121/parallelization-deep-learning.git
 cd parallelization-deep-learning
 pip install -r requirements.txt
 
@@ -83,6 +83,7 @@ We analyzed the training efficiency across two datasets (MNIST and CIFAR-10). Th
 * [x] **Visualizations:** Loss curves and performance tables included in notebooks and results.
 
 ---
+
 
 
 
