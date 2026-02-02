@@ -19,7 +19,7 @@ class SimpleCNN(nn.Module):
         x = torch.relu(self.fc1(x))
         return self.fc2(x)
 
-def train_serial():
+def train_serial(epochs=5):
     transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
     trainset = torchvision.datasets.MNIST(root='./data', train=True, download=True, transform=transform)
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
@@ -34,7 +34,7 @@ def train_serial():
 
     losses = []
     start_time = time.time()
-    for epoch in range(2):
+    for epoch in range(epochs):
         for images, labels in trainloader:
             images, labels = images.to(device), labels.to(device)
             optimizer.zero_grad()
@@ -48,8 +48,7 @@ def train_serial():
     training_time = end_time - start_time
 
     # Accuracy evaluation
-    correct = 0
-    total = 0
+    correct, total = 0, 0
     with torch.no_grad():
         for images, labels in testloader:
             images, labels = images.to(device), labels.to(device)
@@ -74,4 +73,4 @@ def train_serial():
         f.write(f"Serial Training Time: {training_time:.2f} seconds | Accuracy: {accuracy:.2f}%\n")
 
 if __name__ == "__main__":
-    train_serial()
+    train_serial(epochs=5)

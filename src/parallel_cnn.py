@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import time
 from serial_cnn import SimpleCNN
 
-def train_parallel():
+def train_parallel(epochs=5):
     transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
     trainset = torchvision.datasets.MNIST(root='./data', train=True, download=True, transform=transform)
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=64, shuffle=True)
@@ -22,7 +22,7 @@ def train_parallel():
 
     losses = []
     start_time = time.time()
-    for epoch in range(2):
+    for epoch in range(epochs):
         for images, labels in trainloader:
             images, labels = images.to(device), labels.to(device)
             optimizer.zero_grad()
@@ -36,8 +36,7 @@ def train_parallel():
     training_time = end_time - start_time
 
     # Accuracy evaluation
-    correct = 0
-    total = 0
+    correct, total = 0, 0
     with torch.no_grad():
         for images, labels in testloader:
             images, labels = images.to(device), labels.to(device)
@@ -62,4 +61,4 @@ def train_parallel():
         f.write(f"Parallel Training Time: {training_time:.2f} seconds | Accuracy: {accuracy:.2f}%\n")
 
 if __name__ == "__main__":
-    train_parallel()
+    train_parallel(epochs=5)
