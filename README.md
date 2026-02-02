@@ -3,7 +3,7 @@
 
 [![Report](https://img.shields.io/badge/Documentation-Technical%20Report-blue)](report/Take_Home.pdf)  
 
-path to the report: ## report/Take_Home.pdf
+## path to the report:  report/Take_Home.pdf
 
 This repository contains the implementation, evaluation, and performance analysis of parallelization strategies for training Deep Learning models. The project compares a **Serial Baseline** against **Data Parallel** and **Hybrid/Distributed** architectures using Convolutional Neural Networks (CNN).
 
@@ -83,5 +83,6 @@ We analyzed the training efficiency across two datasets (MNIST and CIFAR-10). Th
 * [x] **Visualizations:** Loss curves and performance tables included in notebooks and results.
 
 ---
+
 
 
