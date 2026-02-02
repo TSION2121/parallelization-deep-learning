@@ -15,7 +15,6 @@ This repository contains the implementation, evaluation, and performance analysi
 │   └── parallelization_cnn.ipynb # Serial vs. DataParallel with MNIST
 ├── report/              
 │   ├── Take_Home.pdf            # Comprehensive 5-page Technical Report
-│   └── technical_report.md      # Markdown version of the report
 ├── src/                 
 │   ├── serial_trainer.py        # Baseline training script
 │   └── parallel_trainer.py      # Shared-memory parallel script
@@ -83,6 +82,7 @@ We analyzed the training efficiency across two datasets (MNIST and CIFAR-10). Th
 * [x] **Visualizations:** Loss curves and performance tables included in notebooks and results.
 
 ---
+
 
 
 
